@@ -17,6 +17,7 @@ public class ShuntingYard {
         while(i < expression.length()){
             switch(expression.charAt(i)){
                 case '^':
+                    tokens.add(" ");
                     operators.push("^");
                     break;
 
@@ -25,6 +26,7 @@ public class ShuntingYard {
                         tokens.add(" ");
                         tokens.add(operators.pop());
                     }
+                    tokens.add(" ");
                     operators.push("*");
                     break;
 
@@ -33,6 +35,7 @@ public class ShuntingYard {
                         tokens.add(" ");
                         tokens.add(operators.pop());
                     }
+                    tokens.add(" ");
                     operators.push("/");
                     break;
 
@@ -43,6 +46,7 @@ public class ShuntingYard {
                         tokens.add(" ");
                         tokens.add(operators.pop());
                     }
+                    tokens.add(" ");
                     operators.push("+");
                     break;
 
@@ -53,6 +57,7 @@ public class ShuntingYard {
                         tokens.add(" ");
                         tokens.add(operators.pop());
                     }
+                    tokens.add(" ");
                     operators.push("-");
                     break;
 
@@ -60,6 +65,7 @@ public class ShuntingYard {
                     while(expression.charAt(i) != ')'){
                         switch(expression.charAt(i)) {
                             case '^':
+                                tokens.add(" ");
                                 operators.push("^");
                                 break;
 
@@ -68,6 +74,7 @@ public class ShuntingYard {
                                     tokens.add(" ");
                                     tokens.add(operators.pop());
                                 }
+                                tokens.add(" ");
                                 operators.push("*");
                                 break;
 
@@ -76,6 +83,7 @@ public class ShuntingYard {
                                     tokens.add(" ");
                                     tokens.add(operators.pop());
                                 }
+                                tokens.add(" ");
                                 operators.push("/");
                                 break;
 
@@ -86,6 +94,7 @@ public class ShuntingYard {
                                     tokens.add(" ");
                                     tokens.add(operators.pop());
                                 }
+                                tokens.add(" ");
                                 operators.push("+");
                                 break;
 
@@ -96,6 +105,7 @@ public class ShuntingYard {
                                     tokens.add(" ");
                                     tokens.add(operators.pop());
                                 }
+                                tokens.add(" ");
                                 operators.push("-");
                                 break;
 
@@ -104,7 +114,6 @@ public class ShuntingYard {
                                 break;
 
                             default:
-                                tokens.add(" ");
                                 tokens.add(String.valueOf(expression.charAt(i)));
                                 break;
                         }
@@ -120,7 +129,6 @@ public class ShuntingYard {
                     break;
 
                 default:
-                    tokens.add(" ");
                     tokens.add(String.valueOf(expression.charAt(i)));
                     break;
             }
@@ -129,7 +137,7 @@ public class ShuntingYard {
         }
 
         for(String token : tokens){
-            postfixNotation += " " + token;
+            postfixNotation += token;
         }
 
         while(!operators.isEmpty()){
