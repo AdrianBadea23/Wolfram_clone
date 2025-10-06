@@ -17,6 +17,10 @@ public class ShuntingYard {
         while(i < expression.length()){
             switch(expression.charAt(i)){
                 case '^':
+                    if(!operators.isEmpty() && operators.peek().equals("^")){
+                        tokens.add(" ");
+                        tokens.add(operators.pop());
+                    }
                     tokens.add(" ");
                     operators.push("^");
                     break;
