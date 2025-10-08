@@ -6,148 +6,81 @@ import java.util.Stack;
 
 public class ShuntingYard {
 
-    public ShuntingYard() {}
+    // Method is used to get the precedence of operators
+    private static boolean letterOrDigit(char c)
+    {
+        // boolean check
+        if (Character.isLetterOrDigit(c))
+            return true;
+        else
+            return false;
+    }
 
-    public String generatePostfixNotation(String expression) {
-        String postfixNotation = "";
-        Stack<String> operators = new Stack<>();
-        Queue<String> tokens = new LinkedList<>();
-        int i = 0;
+    // Operator having higher precedence
+    // value will be returned
+    static int getPrecedence(char ch)
+    {
 
-        while(i < expression.length()){
-            switch(expression.charAt(i)){
-                case '^':
-                    if(!operators.isEmpty() && operators.peek().equals("^")){
-                        tokens.add(" ");
-                        tokens.add(operators.pop());
-                    }
-                    tokens.add(" ");
-                    operators.push("^");
-                    break;
+        if (ch == '+' || ch == '-')
+            return 1;
+        else if (ch == '*' || ch == '/')
+            return 2;
+        else if (ch == '^')
+            return 3;
+        else
+            return -1;
+    }
 
-                case '*':
-                    if(!operators.isEmpty() && operators.peek().equals("^")){
-                        tokens.add(" ");
-                        tokens.add(operators.pop());
-                    }
-                    tokens.add(" ");
-                    operators.push("*");
-                    break;
+    // Operator has Left --> Right associativity
+    static boolean hasLeftAssociativity(char ch) {
+        if (ch == '+' || ch == '-' || ch == '/' || ch == '*') {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-                case '/':
-                    if(!operators.isEmpty() && operators.peek().equals("^")){
-                        tokens.add(" ");
-                        tokens.add(operators.pop());
-                    }
-                    tokens.add(" ");
-                    operators.push("/");
-                    break;
+    // Method converts  given infixto postfix expression
+    // to illustrate shunting yard algorithm
+    public String infixToRpn(String expression) {
+        Stack<Character> stack = new Stack<>();
 
-                case '+':
-                    if(!operators.isEmpty() && (operators.peek().equals("^")
-                            || operators.peek().equals("*")
-                            || operators.peek().equals("/"))){
-                        tokens.add(" ");
-                        tokens.add(operators.pop());
-                    }
-                    tokens.add(" ");
-                    operators.push("+");
-                    break;
+        String output = new String("");
 
-                case '-':
-                    if(!operators.isEmpty() && (operators.peek().equals("^")
-                            || operators.peek().equals("*")
-                            || operators.peek().equals("/"))){
-                        tokens.add(" ");
-                        tokens.add(operators.pop());
-                    }
-                    tokens.add(" ");
-                    operators.push("-");
-                    break;
+        for (int i = 0; i < expression.length(); ++i) {
+            char c = expression.charAt(i);
 
-                case '(':
-                    while(expression.charAt(i) != ')'){
-                        switch(expression.charAt(i)) {
-                            case '^':
-                                tokens.add(" ");
-                                operators.push("^");
-                                break;
+            if (letterOrDigit(c))
+                output += " " + c;
+            else if (c == '(')
+                stack.push(c);
+            else if (c == ')') {
+                while (!stack.isEmpty()
+                        && stack.peek() != '(')
+                    output += " " + stack.pop();
 
-                            case '*':
-                                if (!operators.isEmpty() && operators.peek().equals("^")) {
-                                    tokens.add(" ");
-                                    tokens.add(operators.pop());
-                                }
-                                tokens.add(" ");
-                                operators.push("*");
-                                break;
-
-                            case '/':
-                                if (!operators.isEmpty() && operators.peek().equals("^")) {
-                                    tokens.add(" ");
-                                    tokens.add(operators.pop());
-                                }
-                                tokens.add(" ");
-                                operators.push("/");
-                                break;
-
-                            case '+':
-                                if (!operators.isEmpty() && (operators.peek().equals("^")
-                                        || operators.peek().equals("*")
-                                        || operators.peek().equals("/"))) {
-                                    tokens.add(" ");
-                                    tokens.add(operators.pop());
-                                }
-                                tokens.add(" ");
-                                operators.push("+");
-                                break;
-
-                            case '-':
-                                if (!operators.isEmpty() && (operators.peek().equals("^")
-                                        || operators.peek().equals("*")
-                                        || operators.peek().equals("/"))) {
-                                    tokens.add(" ");
-                                    tokens.add(operators.pop());
-                                }
-                                tokens.add(" ");
-                                operators.push("-");
-                                break;
-
-                            case '(':
-                                operators.push("(");
-                                break;
-
-                            default:
-                                tokens.add(String.valueOf(expression.charAt(i)));
-                                break;
-                        }
-
-                        i++;
-                    }
-
-                    while(!operators.peek().equals("(")){
-                        tokens.add(" ");
-                        tokens.add(operators.pop());
-                    }
-                    operators.pop();
-                    break;
-
-                default:
-                    tokens.add(String.valueOf(expression.charAt(i)));
-                    break;
+                stack.pop();
             }
+            else {
+                while (
+                        !stack.isEmpty()
+                                && getPrecedence(c)
+                                <= getPrecedence(stack.peek())
+                                && hasLeftAssociativity(c)) {
+                    // peek() inbuilt stack function to
+                    // fetch the top element(token)
 
-            i++;
+                    output += " " + stack.pop();
+                }
+                stack.push(c);
+            }
         }
 
-        for(String token : tokens){
-            postfixNotation += token;
+        while (!stack.isEmpty()) {
+            if (stack.peek() == '(')
+                return "This expression is invalid";
+            output += " " + stack.pop();
         }
-
-        while(!operators.isEmpty()){
-            postfixNotation += " " + operators.pop();
-        }
-
-        return postfixNotation;
+        return output;
     }
 }

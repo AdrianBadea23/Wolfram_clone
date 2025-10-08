@@ -13,12 +13,13 @@ public class EquationController {
 
     @GetMapping("/solve")
     public String solve(@RequestParam String equation) {
-        System.out.println("Solving equation: " + equation);
+//        System.out.println("Solving equation: " + equation);
         String postfixNotation;
         ShuntingYard shuntingYard =  new ShuntingYard();
         PostfixSolver postfixSolver = new PostfixSolver();
 
-        postfixNotation = shuntingYard.generatePostfixNotation(equation);
+        postfixNotation = shuntingYard.infixToRpn(equation);
+//        System.out.println("Postfix Notation: " + postfixNotation);
         return String.valueOf(postfixSolver.getSolution(postfixNotation));
     }
 }
