@@ -2,8 +2,6 @@ package com.project.wolfram_clone.core;
 
 import org.springframework.stereotype.Component;
 
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Stack;
 
 @Component
