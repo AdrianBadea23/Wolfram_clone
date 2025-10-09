@@ -10,13 +10,6 @@ public class WolframCloneApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(WolframCloneApplication.class, args);
-//        String postfixNotation;
-//        ShuntingYard shuntingYard =  new ShuntingYard();
-//        PostfixSolver postfixSolver = new PostfixSolver();
-//
-//        postfixNotation = shuntingYard.generatePostfixNotation("(11+2)^3+7");
-//        System.out.println(postfixNotation);
-//        System.out.println(postfixSolver.getSolution(postfixNotation));
     }
 
 

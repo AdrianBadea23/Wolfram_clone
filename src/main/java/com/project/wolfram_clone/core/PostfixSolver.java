@@ -1,9 +1,10 @@
 package com.project.wolfram_clone.core;
 
+import org.springframework.stereotype.Component;
+
 import java.util.Stack;
 
-import static java.lang.Math.pow;
-
+@Component
 public class PostfixSolver {
 
     public PostfixSolver() {}
