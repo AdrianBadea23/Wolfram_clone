@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build with Maven
         run: | 
-          podman build -t wolfram .
+          podman build -f Dockerfile.build -t wolfram .
           podman create --name wolfram_temp wolfram
           podman cp wolfram_temp:/usr/local/app/target/Wolfram_clone-0.0.1-SNAPSHOT.jar ./app.jar
           podman rm wolfram_temp

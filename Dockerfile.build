@@ -1,0 +1,6 @@
+FROM docker.io/library/maven:3.8.7-eclipse-temurin-17 AS builder
+
+WORKDIR /usr/local/app
+COPY . .
+
+RUN mvn clean package
