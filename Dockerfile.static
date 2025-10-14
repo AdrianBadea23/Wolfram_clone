@@ -13,10 +13,11 @@ RUN apt-get update && apt-get install -y wget unzip default-jre \
     && rm -rf /var/lib/apt/lists/*
 RUN wget https://github.com/pmd/pmd/releases/download/pmd_releases%2F7.17.0/pmd-dist-7.17.0-bin.zip \
     && unzip pmd-dist-7.17.0-bin.zip \
+    && ln -s /pmd-bin-7.17.0/bin/pmd /usr/local/bin/pmd
     && rm pmd-dist-7.17.0-bin.zip
 
 COPY . .
 
-RUN ./pmd-bin-7.17.0/bin/pmd check -d . \
+RUN pmd check -d . \
    -R rulesets/java/quickstart.xml \
    -r Static.txt || true
