@@ -5,7 +5,7 @@ COPY . .
 
 RUN mvn clean test
 
-FROM docker.io/library/pmd
+FROM docker.io/rawdee/pmd
 
 WORKDIR /usr/local/app
 COPY . .
