@@ -1,0 +1,6 @@
+FROM docker.io/library/pmd
+
+WORKDIR /usr/local/app
+COPY . .
+
+RUN pmd check -d /usr/local/app -R rulesets/java/quickstart.xml -r Static.txt
