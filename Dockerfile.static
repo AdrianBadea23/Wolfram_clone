@@ -10,4 +10,4 @@ FROM docker.io/rawdee/pmd
 WORKDIR /usr/local/app
 COPY . .
 
-RUN pmd check -d /usr/local/app -R rulesets/java/quickstart.xml -r Static.txt
+RUN rawdee/pmd -language java -dir . -rulesets rulesets/java/quickstart.xml -r Static.txt
