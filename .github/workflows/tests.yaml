@@ -17,6 +17,7 @@ jobs:
           podman create --name wolfram_temp2 wolfram
           podman cp wolfram_temp2:/usr/local/app/Static.txt Static.txt
           podman rm wolfram_temp2
+          ls -a
         continue-on-error: true
       - uses: actions/upload-artifact@v4
         with:
