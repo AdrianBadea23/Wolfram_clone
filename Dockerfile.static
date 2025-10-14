@@ -5,9 +5,19 @@ COPY . .
 
 RUN mvn clean test
 
-FROM docker.io/rawdee/pmd
+FROM docker.io/library/debian:latest
 
 WORKDIR /usr/local/app
+
+RUN apt-get update && apt-get install -y wget unzip openjdk-17-jdk \
+    && rm -rf /var/lib/apt/lists/*
+RUN wget https://github.com/pmd/pmd/releases/download/pmd_releases%2F7.17.0/pmd-dist-7.17.0-bin.zip \
+    && unzip pmd-dist-7.17.0-bin.zip -d opt/ \
+    && ln -s /opt/pmd-dist-7.17.0/bin/pmd /usr/local/bin/pmd \
+    && rm pmd-dist-7.17.0-bin.zip
+
 COPY . .
 
-RUN rawdee/pmd -language java -dir . -rulesets rulesets/java/quickstart.xml -r Static.txt
+RUN pmd check -d /usr/local/app \
+    -R rulesets/java/quickstart.xml \
+    -r /usr/local/app/Static.txt
