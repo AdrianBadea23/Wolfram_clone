@@ -5,7 +5,7 @@ import com.project.wolfram_clone.core.ShuntingYard;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+@SpringBootTest()
 class WolframCloneApplicationTests {
 
     private final ShuntingYard shuntingYard = new ShuntingYard();
