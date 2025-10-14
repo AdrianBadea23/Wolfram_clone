@@ -17,6 +17,6 @@ RUN wget https://github.com/pmd/pmd/releases/download/pmd_releases%2F7.17.0/pmd-
 
 COPY . .
 
-RUN ./pmd-dist-7.17.0/bin/pmd check -d . \
+RUN ./pmd-bin-7.17.0/bin/pmd check -d . \
    -R rulesets/java/quickstart.xml \
    -r Static.txt
