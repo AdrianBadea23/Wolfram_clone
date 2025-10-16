@@ -21,8 +21,9 @@ jobs:
 
       - name: Dockerhub Image
         run: |
-          podman build -f Dockerfile.run -t adrianbadea23/equation_test:latest .
-          podman push adrianbadea23/equation_test:latest
+          podman login -u ${{ secrets.DOCKERHUBID }} -p ${{ secrets.DOCKERHUBPASSWORD }} $REGISTRY
+          podman build -f Dockerfile.run -t ${{ secrets.DOCKERHUBID }}/equation_test:latest .
+          podman push ${{ secrets.DOCKERHUBID }}/equation_test:latest
           podman rm -a
 
       - uses: actions/upload-artifact@v4
