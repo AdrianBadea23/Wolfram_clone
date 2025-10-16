@@ -19,4 +19,4 @@ COPY . .
 
 RUN ./pmd-bin-7.17.0/bin/pmd check -d . \
    -R rulesets/java/quickstart.xml \
-   -r Static.txt || true
+   -r Static.csv --format csv || true

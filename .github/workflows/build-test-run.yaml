@@ -1,10 +1,11 @@
 name: Building the App
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  workflow_run:
+    workflows: ["Tests Java App"]
+    types:
+      - completed
+
 
 jobs:
   build:
@@ -17,6 +18,13 @@ jobs:
           podman create --name wolfram_temp wolfram
           podman cp wolfram_temp:/usr/local/app/target/Wolfram_clone-0.0.1-SNAPSHOT.jar ./app.jar
           podman rm wolfram_temp
+
+      - name: Dockerhub Image
+        run: |
+          podman build -f Dockerfile.run -t equation_test:latest .
+          podman push adrianbadea23/equation_test:latest
+          podman rm -a
+
       - uses: actions/upload-artifact@v4
         with:
           name: Java JAR
