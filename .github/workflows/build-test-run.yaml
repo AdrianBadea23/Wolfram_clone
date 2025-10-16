@@ -6,6 +6,8 @@ on:
     types:
       - completed
 
+env:
+  REGISTRY: docker.io
 
 jobs:
   build:
@@ -21,7 +23,7 @@ jobs:
 
       - name: Dockerhub Image
         run: |
-          podman login -u ${{ secrets.DOCKERHUBID }} -p ${{ secrets.DOCKERHUBPASSWORD }}
+          podman login -u ${{ secrets.DOCKERHUBID }} -p ${{ secrets.DOCKERHUBPASSWORD }} $REGISTRY
           podman build -f Dockerfile.run -t ${{ secrets.DOCKERHUBID }}/equation_test:latest .
           podman push ${{ secrets.DOCKERHUBID }}/equation_test:latest
           podman rm -a
