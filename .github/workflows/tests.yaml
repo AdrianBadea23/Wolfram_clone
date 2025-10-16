@@ -15,10 +15,10 @@ jobs:
         run: |
           podman build -f Dockerfile.static -t wolfram .
           podman create --name wolfram_temp2 wolfram
-          podman cp wolfram_temp2:/usr/local/app/Static.txt Static.txt
+          podman cp wolfram_temp2:/usr/local/app/Static.csv Static.csv
           podman rm wolfram_temp2
         continue-on-error: true
       - uses: actions/upload-artifact@v4
         with:
           name: Static Analysis File
-          path: Static.txt
+          path: Static.csv
