@@ -18,6 +18,12 @@ jobs:
           podman cp wolfram_temp2:/usr/local/app/Static.csv Static.csv
           podman rm wolfram_temp2
         continue-on-error: true
+
+      - name: Clean podman images
+        run: |
+          podman rm -a
+        continue-on-error: true
+
       - uses: actions/upload-artifact@v4
         with:
           name: Static Analysis File
