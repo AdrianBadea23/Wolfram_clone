@@ -21,7 +21,7 @@ jobs:
 
       - name: Dockerhub Image
         run: |
-          podman build -f Dockerfile.run -t equation_test:latest .
+          podman build -f Dockerfile.run -t adrianbadea23/equation_test:latest .
           podman push adrianbadea23/equation_test:latest
           podman rm -a
 
