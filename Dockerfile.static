@@ -1,9 +1,9 @@
-FROM docker.io/library/maven:3.8.7-eclipse-temurin-17 AS builder
+FROM docker.io/library/maven:3.8.7-eclipse-temurin-17 AS tester
 
 WORKDIR /usr/local/app
 COPY . .
 
-RUN mvn clean test
+RUN mvn surefire-report:report
 
 FROM docker.io/library/debian:latest
 
@@ -16,6 +16,8 @@ RUN wget https://github.com/pmd/pmd/releases/download/pmd_releases%2F7.17.0/pmd-
     && rm pmd-dist-7.17.0-bin.zip
 
 COPY . .
+RUN mkdir -p test_report
+COPY --from=tester /usr/local/app/target ./test_report
 
 RUN ./pmd-bin-7.17.0/bin/pmd check -d . \
    -R rulesets/java/quickstart.xml \
